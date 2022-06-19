@@ -1,22 +1,35 @@
-import React from 'react'
+import React, {useState} from 'react'
 import style from './newtodo.module.css'
 
-export const NewTodo = () => {
+export const NewTodo = (props) => {
 
+    const [todo,setTodo] = useState({ title : "" ,desc : ""})
+
+    const{title,desc}=todo;
+    const handleChange =(e) =>{
+        const name = e.target.name;
+        setTodo((oldTodo)=>{
+            return {...oldTodo,[name]:e.target.value}
+        })
+    }
     const handleSubmit =(e) =>{
         e.preventDefault();
+           setTodo({title : "" , desc : ""})
+          props.onAddTodo(todo)
     }
     return (
 
         <form className = {style.form} onSubmit={handleSubmit}>
             <div className={style["form-filed"]}>
                 <label htmlFor='title' >Title</label>
-                <input type="text" id="title" name="title" />
+                <input type="text" id="title" name="title" value={title}
+                onChange={handleChange} />
             </div>
 
             <div className={style["form-filed"]}>
                 <label htmlFor='desc' >Description</label>
-                <textarea type="text" id="desc" name="desc" />
+                <textarea type="text" id="desc" name="desc" value={desc}
+                onChange={handleChange}  />
             </div>
             <button type='submit'> Add Todo</button>
         </form>
