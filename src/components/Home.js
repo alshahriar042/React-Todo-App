@@ -8,20 +8,29 @@ import { v4 as uuidv4 } from 'uuid';
 
 const Home = () => {
  
-  const[todos,setTodo] =useState([]);
+  const[todos,setTodos] =useState([]);
 
 const handleTodo = (todo) => {
-    setTodo((prevTodos) => {
-      return [...prevTodos,{id: uuidv4(),todo}]
+    setTodos((prevTodos) => {
+      return [ ...prevTodos,{id: uuidv4(),todo}]
   });
-  console.log(todo);
 };
+const handleRemoveTodo = (id) => {
+  //  setTodos(filterTodos);
+  setTodos((prevTodos) => {
+     const filterTodos = prevTodos.filter((todo) =>todo.id !== id);
+
+    return filterTodos;
+ 
+});
+}
+
 
   return (
     <div className={style.container}>
       <NewTodo onAddTodo ={handleTodo} />
         <h1 style={{color :"white"}}>Todo App </h1>
-        <Todos todos ={todos} />
+        <Todos todos ={todos} onRemoveTodo={handleRemoveTodo}/>
     </div>
   )
 }
